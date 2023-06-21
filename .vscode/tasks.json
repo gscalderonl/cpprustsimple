@@ -1,0 +1,54 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build-rust",
+            "type": "shell",
+            "command": "cargo build --release",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "label": "build-cpp",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-std=c++11",
+                "-o",
+                "${workspaceFolder}/cpp_program",
+                "${workspaceFolder}/src/main.cpp",
+                "-I",
+                "${workspaceFolder}",
+                "-I",
+                "${workspaceFolder}/target/cxxbridge",
+                "-I",
+                "/home/gscalderon/cpprust/benchmark/include",
+                "-L",
+                "${workspaceFolder}/target/debug",
+                // "${workspaceFolder}/target/release",
+                "-L",
+                "/home/gscalderon/cpprust/benchmark/build/src",
+                "-l",
+                "cpprust",
+                "-l",
+                "benchmark",
+                "-l",
+                "benchmark_main",
+                "-pthread",
+                "-l",
+                "dl",
+                "-O2"
+            ],
+            "dependsOn": "build-rust",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
